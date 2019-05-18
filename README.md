@@ -24,4 +24,4 @@ gets images/gifs/videos of cats from reddit, sends to mom in applescript
 
 ## Shortcomings
 
-Unfortunately, requesting videos from reddit (sources that include `v.red.it`) resulted in reddit detecting that a script was making too many requests to the site. Since posts of that format from these subreddits seems to be a rarity, I will not be attempting a workaround.
+Unfortunately, requesting videos from reddit (sources that include `v.redd.it`) resulted in reddit detecting that a script was making too many requests to the site. Since posts of that format from these subreddits seems to be a rarity, I will not be attempting a workaround.
