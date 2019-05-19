@@ -68,20 +68,24 @@ def handle_url(url=REDDIT_URL):
         title  = post['data']['title']
         source = post['data']['domain']
 
-        d[url]=source
+        d[url]=[source,title]
 
         images.append(d)
 
     img        = random.choice(images)
     img_url    = next(iter(img.keys()))
     img_source = next(iter(img.values()))
+    img_title  = next(iter(img.values()))
 
-    print('Using url: {}'.format(img_url))
+    # Print title for text msg
+    print("Title: {}".format(img_title[1]))
+
+    #print('Using url: {}'.format(img_url))
 
     return dl_content(img_url, img_source)
 
 def write_file(img_url):
-    print('img url: {}'.format(img_url))
+    #print('img url: {}'.format(img_url))
     if img_url:
         if 'mp4' in img_url:
             ext = '.mp4'
