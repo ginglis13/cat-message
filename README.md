@@ -10,6 +10,7 @@ gets images/gifs/videos of cats from reddit, sends to mom in applescript
 - [chonkers](https://www.reddit.com/r/chonkers)
 - [bigcatgifs](https://www.reddit.com/r/bigcatgifs)
 - [babybigcatgifs](https://www.reddit.com/r/babybigcatgifs)
+- [holdmycatnip](https://www.reddit.com/r/holdmycatnip)
 
 ## Checklist
 
