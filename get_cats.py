@@ -29,7 +29,7 @@ SUBREDDITS = [
         'holdmycatnip'
         ]
 
-REDDIT_URL = 'https://reddit.com/r/{}/.json'
+REDDIT_URL = 'https://reddit.com/r/{}/top.json?sort=top&t=all'
 GFYCAT = 'https://gfycat.com/cajax/get/{}'
 
 headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp19'))}
