@@ -29,7 +29,7 @@ SUBREDDITS = [
         ]
 
 REDDIT_URL = 'https://reddit.com/r/{}/.json?sort=top'
-GFYCAT = 'https://gfycat.com/cajax/get/{}'
+GFYCAT = 'https://api.gfycat.com/v1/gfycats/{}'
 
 headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp19'))}
 
@@ -43,6 +43,7 @@ def dl_content(url, source):
 
         r = requests.get(GFYCAT.format(gfy_url)).json()
         gfy_mp4url = r['gfyItem']['mp4Url']
+
         return gfy_mp4url, title
 
     elif source == 'i.imgur.com':
@@ -109,7 +110,7 @@ def write_file(img_url, title):
         with iopen(fname, 'wb') as file:
             file.write(r.content)
     else:
-        print('Something went wrong - no url')
+        sys.stderr.write('Something went wrong - no url\n')
 
 '''Main Execution'''
 
