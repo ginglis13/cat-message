@@ -11,10 +11,9 @@ ginglis
 
 import requests
 import random
-import pprint
 import os
 from io import open as iopen
-from urllib.parse import urlsplit
+import sys
 
 '''Globals/Metadata'''
 
@@ -29,7 +28,7 @@ SUBREDDITS = [
         'holdmycatnip'
         ]
 
-REDDIT_URL = 'https://reddit.com/r/{}/top.json?sort=top&t=all'
+REDDIT_URL = 'https://reddit.com/r/{}/.json?sort=top'
 GFYCAT = 'https://gfycat.com/cajax/get/{}'
 
 headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp19'))}
@@ -37,24 +36,27 @@ headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp
 '''Functions'''
 
 def dl_content(url, source):
+    title  = source[1]
+    source = source[0]
     if source == 'gfycat.com':
         gfy_url = url.split('/')[-1]
 
         r = requests.get(GFYCAT.format(gfy_url)).json()
         gfy_mp4url = r['gfyItem']['mp4Url']
-
-        return gfy_mp4url
+        return gfy_mp4url, title
 
     elif source == 'i.imgur.com':
         img_url = url.replace('.gifv', '.mp4')
-        return img_url
+        return img_url, title
 
     else:
-        return url
+        return url, title
 
 def handle_url(url=REDDIT_URL):
 
-    url      = url.format(random.choice(SUBREDDITS))
+    subreddit = random.choice(SUBREDDITS)
+    #print('Subreddit: {}'.format(subreddit))
+    url      = url.format(subreddit)
     response = requests.get(url, headers=headers).json()
     data     = response['data']['children']
     images   = []
@@ -79,14 +81,13 @@ def handle_url(url=REDDIT_URL):
     img_title  = next(iter(img.values()))
 
     # Print title for text msg
-    print("Title: {}".format(img_title[1]))
-
-    #print('Using url: {}'.format(img_url))
+    #print("Title: {}".format(img_title[1]))
+    #print("Source: {}".format(img_source[0]))
+    #print("URL: {}".format(img_url))
 
     return dl_content(img_url, img_source)
 
-def write_file(img_url):
-    #print('img url: {}'.format(img_url))
+def write_file(img_url, title):
     if img_url:
         if 'mp4' in img_url:
             ext = '.mp4'
@@ -97,12 +98,14 @@ def write_file(img_url):
         elif 'jpeg' in img_url:
             ext = '.jpeg'
         elif 'v.redd.it' in img_url:
-            print('The source of this file is v.reddit. Unfortunately, reddit recognizes requests to this source as being from a script and blocks them. Apologies.')
+            sys.stderr.write('The source of this file is v.redd.it. Unfortunately, reddit recognizes requests to this source as being from a script and blocks them. Apologies.\n')
+            sys.exit()
         else:
             ext = '.jpg'
 
         fname = 'cat' + ext
         r = requests.get(img_url, stream=True)
+        print('Title: {}'.format(title))
         with iopen(fname, 'wb') as file:
             file.write(r.content)
     else:
@@ -111,7 +114,7 @@ def write_file(img_url):
 '''Main Execution'''
 
 # remove former cat file, necessary for applescript
-os.popen('rm ~/projects/cat-message/cat*')
+os.popen('rm ./cat*')
 
-img = handle_url(REDDIT_URL)
-write_file(img)
+img, title = handle_url()
+write_file(img, title)
