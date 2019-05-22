@@ -14,13 +14,12 @@ gets images/gifs/videos of cats from reddit, sends to mom in applescript
 
 ## Checklist
 
-- [X] Find and save jpgs
-- [X] Handle gyfcat posts
-- [X] Handle imgur posts
-- [ ] Handle YouTube posts
-- [X] Handle other image formats (png, etc)
-- [X] Write the applescript
-- [ ] Include the post title in iMessage
+- [X] Find and save images
+- [X] Handle gyfcat
+- [X] Handle imgur
+- [ ] Handle YouTube
+- [X] Applescript to send iMessage
+- [X] Include the post title in iMessage
 - [ ] Comment Code, clean up, document
 
 ## Shortcomings
