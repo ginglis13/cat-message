@@ -49,6 +49,7 @@ This is a short and simple shell script I made just to consolidate the Python sc
 - [bigcatgifs](https://www.reddit.com/r/bigcatgifs)
 - [babybigcatgifs](https://www.reddit.com/r/babybigcatgifs)
 - [holdmycatnip](https://www.reddit.com/r/holdmycatnip)
+- [catsISUOTTATFO](https://www.reddit.com/r/CatsISUOTTATFO/)
 
 ## Checklist
 
