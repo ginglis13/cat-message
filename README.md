@@ -1,6 +1,10 @@
 # cat-message
 gets images/gifs/videos of cats from reddit, sends to mom via an Applescript.
 
+<p align="center">
+  <img src="demo.gif" />
+</p>
+
 ## get_cats.py
 
 As the name of the file suggests, this script is for finding cat media posts on reddit and downloading these posts to the working directory. The script names each file `cat.[relevant extension]`, and before writing this file, the script deletes each file named `cat.*`. There are a few shortcomings to this file as are outlined in the section titled Shortcomings. If the script runs into any errors/can't get the media type, a message is printed to `stderr`.
