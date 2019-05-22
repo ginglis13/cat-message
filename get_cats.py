@@ -56,7 +56,7 @@ def dl_content(url, source):
 def handle_url(url=REDDIT_URL):
 
     subreddit = random.choice(SUBREDDITS)
-    #print('Subreddit: {}'.format(subreddit))
+
     url      = url.format(subreddit)
     response = requests.get(url, headers=headers).json()
     data     = response['data']['children']
@@ -81,11 +81,6 @@ def handle_url(url=REDDIT_URL):
     img_source = next(iter(img.values()))
     img_title  = next(iter(img.values()))
 
-    # Print title for text msg
-    #print("Title: {}".format(img_title[1]))
-    #print("Source: {}".format(img_source[0]))
-    #print("URL: {}".format(img_url))
-
     return dl_content(img_url, img_source)
 
 def write_file(img_url, title):
@@ -104,9 +99,15 @@ def write_file(img_url, title):
         else:
             ext = '.jpg'
 
+        # remove former cat file, necessary for applescript
+        os.popen('rm ./cat*')
+
         fname = 'cat' + ext
         r = requests.get(img_url, stream=True)
+
+        # Print title for text msg
         print('Title: {}'.format(title))
+
         with iopen(fname, 'wb') as file:
             file.write(r.content)
     else:
@@ -114,8 +115,6 @@ def write_file(img_url, title):
 
 '''Main Execution'''
 
-# remove former cat file, necessary for applescript
-os.popen('rm ./cat*')
 
 img, title = handle_url()
 write_file(img, title)
