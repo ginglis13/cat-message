@@ -9,6 +9,7 @@ May 2019
 ginglis
 '''
 
+import glob
 import requests
 import random
 import os
@@ -37,9 +38,7 @@ headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp
 
 '''Functions'''
 
-def dl_content(url, source):
-    title  = source[1]
-    source = source[0]
+def dl_content(url, source, title):
     if source == 'gfycat.com':
         gfy_url = url.split('/')[-1]
 
@@ -56,67 +55,53 @@ def dl_content(url, source):
         return url, title
 
 def handle_url(url=REDDIT_URL):
-
     subreddit = random.choice(SUBREDDITS)
-
-    url      = url.format(subreddit)
-    response = requests.get(url, headers=headers).json()
-    data     = response['data']['children']
-    images   = []
+    url       = url.format(subreddit)
+    response  = requests.get(url, headers=headers).json()
+    data      = response['data']['children']
+    images    = []
 
     for post in data:
-
-        d = {}
         if post['data']['stickied']:
             continue
 
         url    = post['data']['url']
-        title  = post['data']['title']
         source = post['data']['domain']
+        title  = post['data']['title']
 
-        d[url]=[source,title]
+        images.append((url, source, title))
 
-        images.append(d)
-
-    img        = random.choice(images)
-    img_url    = next(iter(img.keys()))
-    img_source = next(iter(img.values()))
-    img_title  = next(iter(img.values()))
-
-    return dl_content(img_url, img_source)
+    img_url, img_source, img_title = random.choice(images)
+    return dl_content(img_url, img_source, img_title)
 
 def write_file(img_url, title):
-    if img_url:
-        if 'mp4' in img_url:
-            ext = '.mp4'
-        elif 'png' in img_url:
-            ext = '.png'
-        elif 'gif' in img_url:
-            ext = '.gif'
-        elif 'jpeg' in img_url:
-            ext = '.jpeg'
-        elif 'v.redd.it' in img_url:
-            sys.stderr.write('The source of this file is v.redd.it. Unfortunately, reddit recognizes requests to this source as being from a script and blocks them. Apologies.\n')
-            sys.exit()
-        else:
-            ext = '.jpg'
-
-        # remove former cat file, necessary for applescript
-        os.unlink('./cat*')
-
-        fname = 'cat' + ext
-        r = requests.get(img_url, stream=True)
-
-        # Print title for text msg
-        print('Title: {}'.format(title))
-
-        with iopen(fname, 'wb') as file:
-            file.write(r.content)
-    else:
+    if not img_url:
         sys.stderr.write('Something went wrong - no url\n')
+        return
+
+    if 'v.redd.it' in img_url:
+        sys.stderr.write('The source of this file is v.redd.it. Unfortunately, reddit recognizes requests to this source as being from a script and blocks them. Apologies.\n')
+        return
+
+    extension = '.jpg'
+    for ext in ('mp4', 'png', 'gif', 'jpeg', 'jpg'):
+        if ext in img_url:
+            extension = '.' + ext
+
+    # remove former cat file, necessary for applescript
+    for cat_file in glob.glob('cat*'):
+        os.unlink(cat_file)
+
+    fname = 'cat' + extension
+    r = requests.get(img_url, stream=True)
+
+    # Print title for text msg
+    print('Title: {}'.format(title))
+
+    with iopen(fname, 'wb') as file:
+        file.write(r.content)
 
 '''Main Execution'''
-
 
 img, title = handle_url()
 write_file(img, title)
