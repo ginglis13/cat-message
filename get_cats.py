@@ -32,6 +32,7 @@ SUBREDDITS = [
 REDDIT_URL = 'https://reddit.com/r/{}/.json?sort=top'
 GFYCAT = 'https://api.gfycat.com/v1/gfycats/{}'
 
+# shout out cse-20289-sp19
 headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp19'))}
 
 '''Functions'''
@@ -66,7 +67,7 @@ def handle_url(url=REDDIT_URL):
     for post in data:
 
         d = {}
-        if post['data']['stickied'] == True:
+        if post['data']['stickied']:
             continue
 
         url    = post['data']['url']
@@ -101,7 +102,7 @@ def write_file(img_url, title):
             ext = '.jpg'
 
         # remove former cat file, necessary for applescript
-        os.popen('rm ./cat*')
+        os.unlink('./cat*')
 
         fname = 'cat' + ext
         r = requests.get(img_url, stream=True)
