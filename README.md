@@ -22,12 +22,12 @@ This is the Applescript for sending a cat file to the recipient of your choice. 
 on run argv
 	# find the cat file
 	set path_to_file to do shell script "find PATH_TO_REPOSITORY -mindepth 1 -name 'cat*'"
-	
+
 	# set it as a POSIX file
 	set my_file to (path_to_file as POSIX file)
-	
+
 	set post_title to (item 1 of argv)
-	
+
 	# send stuff
 	tell application "Messages"
 		set theBuddy to buddy "RECIPIENT_PHONE_NUMBER" of service "E:YOUR_APPLE_ID"
@@ -54,6 +54,7 @@ This is a short and simple shell script I made just to consolidate the Python sc
 - [babybigcatgifs](https://www.reddit.com/r/babybigcatgifs)
 - [holdmycatnip](https://www.reddit.com/r/holdmycatnip)
 - [catsISUOTTATFO](https://www.reddit.com/r/CatsISUOTTATFO/)
+- [catsareliquid](https://www.reddit.com/r/catsareliquid/)
 
 ## Checklist
 
