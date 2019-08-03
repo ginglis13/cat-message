@@ -35,7 +35,7 @@ REDDIT_URL = 'https://reddit.com/r/{}/.json?sort=top'
 GFYCAT = 'https://api.gfycat.com/v1/gfycats/{}'
 
 # shout out cse-20289-sp19
-headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cse-20289-sp19'))}
+headers = {'user-agent': 'reddit-{}'.format(os.environ.get('USER', 'cat-message'))}
 
 '''Functions'''
 
@@ -81,7 +81,11 @@ def write_file(img_url, title):
         return
 
     if 'v.redd.it' in img_url:
-        sys.stderr.write('The source of this file is v.redd.it. Unfortunately, reddit recognizes requests to this source as being from a script and blocks them. Apologies.\n')
+        sys.stderr.write('''
+        The source of this file is v.redd.it.
+        Unfortunately, reddit recognizes requests to this source as being from a script and blocks them.
+        Apologies.
+        ''')
         return
 
     extension = '.jpg'
@@ -97,7 +101,7 @@ def write_file(img_url, title):
     r = requests.get(img_url, stream=True)
 
     # Print title for text msg
-    print('Title: {}'.format(title))
+    print(title)
 
     with iopen(fname, 'wb') as file:
         file.write(r.content)
