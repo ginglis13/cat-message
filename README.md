@@ -55,6 +55,7 @@ This is a short and simple shell script I made just to consolidate the Python sc
 - [holdmycatnip](https://www.reddit.com/r/holdmycatnip)
 - [catsISUOTTATFO](https://www.reddit.com/r/CatsISUOTTATFO/)
 - [catsareliquid](https://www.reddit.com/r/catsareliquid/)
+- [catloaf](https://www.reddit.com/r/catloaf/)
 
 ## Checklist
 

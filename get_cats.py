@@ -28,7 +28,8 @@ SUBREDDITS = [
         'babybigcatgifs',
         'holdmycatnip',
         'CatsISUOTTATFO',
-        'catsareliquid'
+        'catsareliquid',
+        'catloaf'
         ]
 
 REDDIT_URL = 'https://reddit.com/r/{}/.json?sort=top'
